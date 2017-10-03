@@ -152,3 +152,40 @@ footer a:hover {
         margin-right: 0;
     }
 }
+
+@media only screen and (max-width: 320px) {
+    #content {
+        width: auto;
+        margin: 0.5em;
+        padding: 1em;
+    }
+
+    h1 {       
+        font-size: 1.5em;
+    }
+
+    h2,
+    header p {
+        font-size: 1em;
+    }
+
+    ul {
+        padding: 0;
+    }
+
+    header {
+        margin: 1em 0 2em 0;
+    }
+
+    header h1 {
+        width: 90%;
+    }
+
+    footer {
+        margin: 2em 0;
+    }
+
+    footer a {
+        margin-top: 1em;
+    }
+}
