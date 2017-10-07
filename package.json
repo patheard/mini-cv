@@ -1,0 +1,30 @@
+{
+  "name": "mini-cv",
+  "version": "1.0.0",
+  "description": "A simple resume using Paper.js to make things more interesting.",
+  "main": "index.js",
+  "dependencies": {
+    "jshint-loader": "^0.8.4",
+    "paper": "^0.11.4"
+  },
+  "devDependencies": {
+    "clean-webpack-plugin": "^0.1.17",
+    "copy-webpack-plugin": "^4.1.1",
+    "html-webpack-plugin": "^2.30.1",
+    "webpack": "^3.6.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/patheard/mini-cv.git"
+  },
+  "scripts": {
+	"build": "webpack"
+  },
+  "keywords": [
+    "paperjs",
+    "resume"
+  ],
+  "author": "Pat Heard",
+  "license": "MIT",
+  "homepage": "https://patheard.github.io/mini-cv"
+}
