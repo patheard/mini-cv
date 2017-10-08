@@ -9,4 +9,4 @@ before_script:
 script:
 - npm run build
 after_success:
-  - ./deploy/deploy.sh
+  - ./deploy/deploy.sh 
