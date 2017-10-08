@@ -13,6 +13,16 @@ cp .gitignore $DIST_DIRECTORY || exit 1
 echo "Checking out gh-pages branch"
 git checkout -B gh-pages || exit 1
 
+echo "Generating deploy key for commit"
+ENCRYPTED_KEY_VAR="encrypted_${ENCRYPTION_LABEL}_key"
+ENCRYPTED_IV_VAR="encrypted_${ENCRYPTION_LABEL}_iv"
+ENCRYPTED_KEY=${!ENCRYPTED_KEY_VAR}
+ENCRYPTED_IV=${!ENCRYPTED_IV_VAR}
+openssl aes-256-cbc -K $ENCRYPTED_KEY -iv $ENCRYPTED_IV -in deploy_key.enc -out deploy_key -d
+chmod 600 deploy_key
+eval `ssh-agent -s`
+ssh-add deploy_key
+
 echo "Removing old static content"
 git rm -rf . || exit 1
 
@@ -26,18 +36,6 @@ git config user.email "pat.heard@gmail.com" || exit 1
 
 git add -A . || exit 1
 git commit --allow-empty -m "Regenerated static content for $CURRENT_COMMIT" || exit 1
-
-# Get the deploy key by using Travis's stored variables to decrypt deploy_key.enc
-ENCRYPTED_KEY_VAR="encrypted_${ENCRYPTION_LABEL}_key"
-ENCRYPTED_IV_VAR="encrypted_${ENCRYPTION_LABEL}_iv"
-ENCRYPTED_KEY=${!ENCRYPTED_KEY_VAR}
-ENCRYPTED_IV=${!ENCRYPTED_IV_VAR}
-openssl aes-256-cbc -K $ENCRYPTED_KEY -iv $ENCRYPTED_IV -in deploy_key.enc -out deploy_key -d
-chmod 600 deploy_key
-eval `ssh-agent -s`
-ssh-add deploy_key
-
-# Now that we're all set up, we can push.
 git push --force --quiet $SSH_REPO gh-pages
 
 echo "Cleaning up temp files"
