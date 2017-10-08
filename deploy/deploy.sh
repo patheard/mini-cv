@@ -1,52 +1,31 @@
 #!/bin/bash
-# Credit for the lovely build script: https://github.com/domenic/zones/blob/master/deploy.sh
+#Credit for build script to: http://lthr.io/deploy-to-gh-pages
+echo "Starting deployment"
+echo "Target: gh-pages branch"
 
-set -e # Exit with nonzero exit code if anything fails
+DIST_DIRECTORY="dist/"
+CURRENT_COMMIT=`git rev-parse HEAD`
+ORIGIN_URL=`git config --get remote.origin.url`
+SSH_REPO=${ORIGIN_URL/https:\/\/github.com\//git@github.com:}
 
-SOURCE_BRANCH="master"
-TARGET_BRANCH="gh-pages"
+cp .gitignore $DIST_DIRECTORY || exit 1
 
-# Pull requests and commits to other branches shouldn't try to deploy, just build to verify
-if [ "$TRAVIS_PULL_REQUEST" != "false" -o "$TRAVIS_BRANCH" != "$SOURCE_BRANCH" ]; then
-    echo "Skipping deploy; just doing a build."
-    npm run build
-    exit 0
-fi
+echo "Checking out gh-pages branch"
+git checkout -B gh-pages || exit 1
 
-# Save some useful information
-REPO=`git config remote.origin.url`
-SSH_REPO=${REPO/https:\/\/github.com\//git@github.com:}
-SHA=`git rev-parse --verify HEAD`
+echo "Removing old static content"
+git rm -rf . || exit 1
 
-# Clone the existing gh-pages for this repo into out/
-# Create a new empty branch if gh-pages doesn't exist yet (should only happen on first deply)
-git clone $REPO out
-cd out
-git checkout $TARGET_BRANCH || git checkout --orphan $TARGET_BRANCH
-cd ..
+echo "Copying dist content to root"
+cp -r $DIST_DIRECTORY/* . || exit 1
+cp $DIST_DIRECTORY/.gitignore . || exit 1
 
-# Clean out existing contents
-rm -rf out/**/* || exit 0
+echo "Pushing new content to $ORIGIN_URL"
+git config user.name "Travis CI" || exit 1
+git config user.email "pat.heard@gmail.com" || exit 1
 
-# Run the build
-npm run build
-
-# Now let's go have some fun with the cloned repo
-cd out
-git config user.name "Travis CI"
-git config user.email "pat.heard@gmail.com"
-
-# If there are no changes (e.g. this is a README update) then just bail.
-if [ -z `git diff --exit-code` ]; then
-    echo "No changes to the build on this push; exiting."
-    exit 0
-fi
-
-# Commit the /dist folder
-# The delta will show diffs between new and old versions.
-cd dist
-git add .
-git commit -m "Deploy to GitHub Pages: ${SHA}"
+git add -A . || exit 1
+git commit --allow-empty -m "Regenerated static content for $CURRENT_COMMIT" || exit 1
 
 # Get the deploy key by using Travis's stored variables to decrypt deploy_key.enc
 ENCRYPTED_KEY_VAR="encrypted_${ENCRYPTION_LABEL}_key"
@@ -59,4 +38,10 @@ eval `ssh-agent -s`
 ssh-add deploy_key
 
 # Now that we're all set up, we can push.
-git push $SSH_REPO $TARGET_BRANCH
+git push --force --quiet $SSH_REPO gh-pages
+
+echo "Cleaning up temp files"
+rm -Rf $DIST_DIRECTORY
+
+echo "Deployed successfully."
+exit 0
