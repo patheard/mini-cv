@@ -1,3 +1,5 @@
+![Build status](https://travis-ci.org/patheard/mini-cv.svg?branch=master)
+
 # mini-cv
 A simple resume using Paper.js to make things more interesting.  The background generation and colours are dynamic and when future-Pat has some time, they'll react to user input.
 
@@ -11,5 +13,4 @@ npm run build
 ```
 
 # todo
-1. Add Travis to build and deploy on pull request.
 1. Add unit tests.
