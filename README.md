@@ -1,7 +1,7 @@
 ![Build status](https://travis-ci.org/patheard/mini-cv.svg?branch=master)
 
 # mini-cv
-A simple resume using Paper.js to make things more interesting.  The background generation and colours are dynamic and when future-Pat has some time, they'll react to user input.
+A simple resume using Paper.js to make things more interesting.  The background and colours are dynamic and react to mouse, touch and scroll events:
 
 https://patheard.github.io/mini-cv/
 
