@@ -5,12 +5,9 @@ A simple resume using Paper.js to make things more interesting.  The background 
 
 https://patheard.github.io/mini-cv/
 
-# build
-Run the following to setup and build the project:
+# build and test
+Run the following to setup, test and build the project:
 ```bash
 npm install
 npm run build
 ```
-
-# todo
-1. Add unit tests.
