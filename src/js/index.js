@@ -7,10 +7,10 @@
 var paper = require( "paper" );  
 
 /**
-* Scene object responsible for creating the background and elements.  It also handles the animation
+* scene object responsible for creating the background and elements.  It also handles the animation
 * resize and user scroll events.
 */ 
-var Scene = {
+var scene = {
     
     decelerationTime: 2000,	// Time that it takes for a shape to stop moving
     lastScroll: 0,			// Track the amount of the last user's scroll
@@ -24,20 +24,20 @@ var Scene = {
         paper.setup( document.getElementById( "scene" ) );
         paper.install( window );
 
-        Scene.colors =  {
+        scene.colors =  {
             min: new Color( "blue" ),
             max: new Color( "purple" )
         };
 
-        Scene.draw();
+        scene.draw();
 
         // View animation and resize event handlers
         view
-            .on( "frame", Scene.animate )
-            .on( "resize", Scene.resize );
+            .on( "frame", scene.animate )
+            .on( "resize", scene.resize );
 
         // Smoothly scroll the triangles as the user scrolls
-        window.onscroll = Scene.scroll;        
+        window.onscroll = scene.scroll;        
     },    
 
     /**
@@ -53,7 +53,7 @@ var Scene = {
                 center: [ 0, 0 ],
                 sides: 3,
                 radius: shapeRadius,
-                fillColor: Scene.colors.min,
+                fillColor: scene.colors.min,
                 opacity: 0.1
             }),
             background = new Path.Rectangle({
@@ -74,12 +74,12 @@ var Scene = {
             },
             triangleMouseLeave = function( event ){
                 this.data.animate = false;
-                this.data.stopTimestamp = ( new Date() ).getTime() + Scene.decelerationTime;
+                this.data.stopTimestamp = ( new Date() ).getTime() + scene.decelerationTime;
                 this.data.stopDelta = 1;
             };
 
         // Create and place the triangles elements
-        Scene.triangles = new Group();
+        scene.triangles = new Group();
         for (var i = 0; i < shapeCount; i++) {
             var pointRandom = new Point( 0, 250 ).multiply( Point.random() ),
                 triangle = shapeTriangle.clone();
@@ -90,11 +90,11 @@ var Scene = {
                 .on( "mouseenter", triangleMouseEnter )					
                 .on( "mouseleave", triangleMouseLeave );
             
-            Scene.triangles.addChild( triangle );
+            scene.triangles.addChild( triangle );
         }
 
         // Reset the last scroll so that the triangles can be properly positioned with the window's existing scroll
-        Scene.lastScroll = 0;
+        scene.lastScroll = 0;
     },
     
     /**
@@ -106,8 +106,8 @@ var Scene = {
         var eventTimestamp = ( new Date() ).getTime();
     
         // Loop through the triangles that have been placed on the active layer
-        for ( var i = 0, len = Scene.triangles.children.length; i < len; i++ ) {
-            var item = Scene.triangles.children[ i ];
+        for ( var i = 0, len = scene.triangles.children.length; i < len; i++ ) {
+            var item = scene.triangles.children[ i ];
 
             // Item is intersected by the mouse: animate its position
             if( item.data.animate ){
@@ -115,11 +115,11 @@ var Scene = {
                 item.fillColor.hue += 1 * item.data.hueDelta;
                 
                 // Check if the colour has cycled to the max or min colours and reverse cycle direction as needed.
-                item.data.hueDelta = item.fillColor.hue > Scene.colors.max.hue ? -1 : item.fillColor.hue < Scene.colors.min.hue ? 1 : item.data.hueDelta;						
+                item.data.hueDelta = item.fillColor.hue > scene.colors.max.hue ? -1 : item.fillColor.hue < scene.colors.min.hue ? 1 : item.data.hueDelta;						
             
             // Item is no longer intersected, but it hasn't finished decelerating yet
             } else if( item.data.stopDelta > 0 ){										
-                item.position.y += Math.sin( event.time + i ) * item.data.stopDelta / Scene.decelerationTime;
+                item.position.y += Math.sin( event.time + i ) * item.data.stopDelta / scene.decelerationTime;
                 item.data.stopDelta = item.data.stopTimestamp - eventTimestamp;
             }
         }
@@ -131,8 +131,8 @@ var Scene = {
     */
     resize: function( event ){
         project.clear();
-        Scene.draw();
-        Scene.scroll();
+        scene.draw();
+        scene.scroll();
     },
     
     /**
@@ -141,20 +141,20 @@ var Scene = {
     scroll: function(){
         var triangle,
             scrollTop = window.pageYOffset,
-            scrollDelta = scrollTop - Scene.lastScroll;
+            scrollDelta = scrollTop - scene.lastScroll;
     
         // Change the triangle position in relation to how much the user has scrolled.  
-        for ( var i = 0, len = Scene.triangles.children.length; i < len; i++ ) {
-            triangle = Scene.triangles.children[ i ];
+        for ( var i = 0, len = scene.triangles.children.length; i < len; i++ ) {
+            triangle = scene.triangles.children[ i ];
             triangle.position.y += ( i * scrollDelta ) / 10;						
         }
         
         // Track the current scrollTop so that we can calculate the scoll delta when the event fires again
-        Scene.lastScroll = scrollTop;
+        scene.lastScroll = scrollTop;
     }
 };
 
 // Make the magic happen
-Scene.init();
+scene.init();
 
-module.exports.Scene = Scene;
+module.exports = scene;
