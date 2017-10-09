@@ -31,12 +31,9 @@ var scene = {
 
         scene.draw();
 
-        // View animation and resize event handlers
-        view
-            .on( "frame", scene.animate )
-            .on( "resize", scene.resize );
-
-        // Smoothly scroll the triangles as the user scrolls
+        // Bind event handlers for animation, resize and window scroll
+        view.onFrame = scene.animate;
+        view.onResize = scene.resize;
         window.onscroll = scene.scroll;        
     },    
 

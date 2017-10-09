@@ -1,31 +1,41 @@
 {
-	"name": "mini-cv",
-	"version": "1.0.0",
-	"description": "A simple resume using Paper.js to make things more interesting.",
-	"main": "index.js",
-	"dependencies": {
-		"paper": "^0.11.4"
-	},
-	"devDependencies": {
-		"clean-webpack-plugin": "^0.1.17",
-		"copy-webpack-plugin": "^4.1.1",
-		"html-webpack-plugin": "^2.30.1",
-		"jshint": "^2.9.5",
-		"jshint-loader": "^0.8.4",
-		"webpack": "^3.6.0"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/patheard/mini-cv.git"
-	},
-	"scripts": {
-		"build": "webpack"
-	},
-	"keywords": [
-		"paperjs",
-		"resume"
-	],
-	"author": "Pat Heard",
-	"license": "MIT",
-	"homepage": "https://patheard.github.io/mini-cv"
+  "name": "mini-cv",
+  "version": "1.0.0",
+  "description": "A simple resume using Paper.js to make things more interesting.",
+  "main": "index.js",
+  "dependencies": {
+    "paper": "^0.11.4"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "clean-webpack-plugin": "^0.1.17",
+    "copy-webpack-plugin": "^4.1.1",
+    "html-webpack-plugin": "^2.30.1",
+    "jshint": "^2.9.5",
+    "jshint-loader": "^0.8.4",
+    "karma": "^1.7.1",
+    "karma-chai": "^0.1.0",
+    "karma-mocha": "^1.3.0",
+    "karma-phantomjs-launcher": "^1.0.4",
+    "karma-webpack": "^2.0.5",
+    "mocha": "^4.0.1",
+    "phantomjs-prebuilt": "^2.1.15",
+    "webpack": "^3.6.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/patheard/mini-cv.git"
+  },
+  "scripts": {
+    "build": "webpack",
+    "prebuild": "npm run test",
+    "test": "karma start"
+  },
+  "keywords": [
+    "paperjs",
+    "resume"
+  ],
+  "author": "Pat Heard",
+  "license": "MIT",
+  "homepage": "https://patheard.github.io/mini-cv"
 }
