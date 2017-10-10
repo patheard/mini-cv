@@ -15,6 +15,7 @@ var scene = {
     decelerationTime: 2000,	// Time that it takes for a shape to stop moving
     lastScroll: 0,			// Track the amount of the last user's scroll
     colors: null,			// Colours to use for the shape transitions. TODO: dynamically set colours based on time of day.
+    shapeOffsetX: 50,		// Distance each shape is placed from its neighbour
     triangles: null,		// Group to hold the triangle elements
                 
     /**
@@ -42,10 +43,9 @@ var scene = {
     * and based on the size of the viewport.
     */    
     draw: function(){
-        var shapeOffsetX = 50,												// Distance each shape is placed from its neighbour
-            shapeRadius = view.bounds.height * 0.7,							// Radius of each shape (based on view height)
-            shapeCount = Math.floor( view.bounds.width / shapeOffsetX ), 	// Number of shapes on the canvas (based on the total width of the view)
-            shapePositionY = view.bounds.height - shapeRadius / 2,			// The y axis position of each shap (based on view height and shape radius)
+        var shapeRadius = view.bounds.height * 0.7,							    // Radius of each shape (based on view height)
+            shapeCount = Math.floor( view.bounds.width / scene.shapeOffsetX ), 	// Number of shapes on the canvas (based on the total width of the view)
+            shapePositionY = view.bounds.height - shapeRadius / 2,			    // The y axis position of each shap (based on view height and shape radius)
             shapeTriangle = new Path.RegularPolygon({
                 center: [ 0, 0 ],
                 sides: 3,
@@ -82,7 +82,7 @@ var scene = {
                 triangle = shapeTriangle.clone();
             
             // Position the triangle and bind mouse event handlers.  Triangles are positioned from the center outwards, alternating from left to right.
-            triangle.position = new Point( view.center.x + ( i % 2 ? -1 : 1 ) * shapeOffsetX * i, shapePositionY + pointRandom.y );					
+            triangle.position = new Point( view.center.x + ( i % 2 ? -1 : 1 ) * scene.shapeOffsetX * i, shapePositionY + pointRandom.y );					
             triangle
                 .on( "mouseenter", triangleMouseEnter )					
                 .on( "mouseleave", triangleMouseLeave );

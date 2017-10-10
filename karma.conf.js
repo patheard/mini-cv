@@ -16,6 +16,7 @@ module.exports = function(config) {
       'src/js/**/*.test.js'
     ],
 
+    // Run webpack on javascript files before testing
     preprocessors: {
       'src/**/*.js' : ['webpack']
     },
@@ -33,7 +34,7 @@ module.exports = function(config) {
     reporters: ['progress'],
 
     // web server port
-    port: 9876,
+    port: 9090,
 
     // enable / disable colors in the output (reporters and logs)
     colors: true,
