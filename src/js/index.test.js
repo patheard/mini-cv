@@ -28,7 +28,7 @@ describe(require('path').basename(__filename), function() {
             assert.equal(scene.shapeOffsetX, 50, 'Shape offset X is 50');
             assert.equal(scene.lastScroll, 0, 'Last scroll is 0');
             assert.equal(scene.colors.min.hue, new paper.Color('blue').hue, 'Minimum colour is blue');
-            assert.equal(scene.colors.max.hue, new paper.Color('purple').hue, 'Maximum colour is blue');
+            assert.equal(scene.colors.max.hue, new paper.Color('purple').hue, 'Maximum colour is purple');
         });
         
         it('event handlers should be bound', function() {
