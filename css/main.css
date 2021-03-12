@@ -1,0 +1,191 @@
+/***********************************************
+ Base HTML element styles
+ ***********************************************/
+
+html {
+    color: #222;
+}
+
+body {
+    margin: 0;
+    font: 300 1.2em/1.5 'Roboto', sans-serif;
+    background: #d3ecf5;
+}
+
+h1, h2, .font-muli {
+    font-family: 'Muli', sans-serif;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 0.1em;
+}
+
+h1 {
+    font-size: 3em;
+}
+
+h2 {
+    font-size: 2em;
+}
+
+ul {
+    padding: 0 2em;
+}
+
+ul li {
+    margin: 1.1em;
+    padding: 0;
+}
+
+::-moz-selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+::selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+/***********************************************
+ Layout of site elements
+ ***********************************************/
+
+header {
+    margin: 2em auto 3em auto;
+    text-align: center;
+}
+
+header h1 {
+    width: 75%;
+    margin: 0 auto;
+    padding-bottom: 0.1em;
+    border-bottom: 0.1em solid #222;
+}
+
+header p {
+    margin: 0.5em 2em 1em 2em;
+    font-size: 1.7em;
+    line-height: 1.4;
+}
+
+footer {
+    margin: 4em 0 3em 0;
+    text-align: center;
+}
+
+footer ul {
+    padding: 0;
+    list-style: none;
+}
+
+footer ul li {
+    display: inline;
+    margin: 0 0.2em;
+}
+
+footer a {    
+    display: inline-block;
+    padding: 1em 2em;
+    margin: 0.5em 0;
+
+    font-size: 0.8em;
+    text-decoration: none;
+    
+    color: #222;
+    border: 4px solid #222;
+
+    transition: all 0.2s;
+}
+
+footer a:hover {
+    color: #fff;
+    background: #222;
+}
+
+#content {
+    position: relative;
+    z-index: 2;
+
+    box-sizing: border-box;
+    width: 90%;
+    max-width: 768px;
+    padding: 2em;
+    margin: 4em auto;
+
+    background: rgba(255, 255, 255, 0.7);
+}
+
+#scene {
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;    
+}
+
+/***********************************************
+ Small screen layout
+ ***********************************************/
+
+@media only screen and (max-width: 768px) {
+    #content {
+        width: auto;
+        margin: 0;
+    }
+
+    header {
+        margin: 0 auto;
+    }    
+
+    h1 {
+        font-size: 2.2em;
+    }
+
+    h2 {
+        font-size: 1.5em;
+    }
+
+    ul {
+        padding: 0;
+    }
+
+    header p {
+        font-size: 1.4em;
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+
+    h1 {       
+        font-size: 1.5em;
+    }
+
+    h2,
+    header p {
+        font-size: 1em;
+    }
+
+    ul {
+        padding: 0;
+    }
+
+    header {
+        margin: 1em 0 2em 0;
+    }
+
+    header h1 {
+        width: 90%;
+    }
+
+    footer {
+        margin: 2em 0;
+    }
+
+    footer a {
+        margin-top: 1em;
+    }
+}
